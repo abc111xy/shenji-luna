@@ -1,4 +1,4 @@
-package com.shenji.game;
+package com.shenji.luna;
 
 import android.app.Activity;
 import android.graphics.Color;

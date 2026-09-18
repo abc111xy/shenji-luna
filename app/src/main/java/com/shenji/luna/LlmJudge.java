@@ -1,4 +1,4 @@
-package com.shenji.game;
+package com.shenji.luna;
 
 import org.json.JSONArray;
 import org.json.JSONException;
