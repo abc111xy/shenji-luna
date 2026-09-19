@@ -42,7 +42,6 @@ public class TrialView extends View {
     private long tRound = 0L;
     private long tReply = -1L;
     private String reply = "";
-    private String note = "";   // ★月见：巡礼札记
     private boolean awaiting = true;
     private boolean sent = false;
     private NineWines.Result last;
@@ -72,7 +71,6 @@ public class TrialView extends View {
     /** 开始新一轮审判（重置整局） */
     public void reset() {
         session = new NineWines.Session();
-        note = "";
         tRound = System.currentTimeMillis();
         tReply = -1L;
         reply = "";
@@ -169,15 +167,11 @@ public class TrialView extends View {
             textFit(c, "（ 风停了。祂在听。）", w / 2f, 700 * s, w * 0.88f, 24 * s, alpha(0xFFD9BE86, aJ));
         }
 
-        // ---- 神的回应 + 巡礼札记（私语，淡一线）----
+        // ---- 神的回应 ----
         if (tReply > 0 && reply.length() > 0) {
             float tr = (now - tReply) / 1000f;
             float a = fade(tr, 0f, 0.55f);
-            textFit(c, reply, w / 2f, 688 * s, w * 0.88f, 24 * s, alpha(0xFFD9BE86, a));
-            if (note.length() > 0) {
-                float an = fade(tr, 0.8f, 0.8f);
-                textFit(c, "· " + note + " ·", w / 2f, 730 * s, w * 0.80f, 18 * s, alpha(0xFF9FB6D9, an * 0.85f));
-            }
+            textFit(c, reply, w / 2f, 700 * s, w * 0.88f, 24 * s, alpha(0xFFD9BE86, a));
         }
 
         // ---- 左下 / 右下 状态 ----
@@ -286,7 +280,6 @@ public class TrialView extends View {
                     @Override
                     public void run() {
                         reply = (line == null) ? NineWines.localReply(q.round, kind) : line;
-                        note = "";
                         invalidate();
                     }
                 });
@@ -352,7 +345,6 @@ public class TrialView extends View {
                         if (session == null) return;
                         last = session.answerCustom(text, v.kind);
                         reply = v.reply;
-                        note = v.note;   // ★月见：札记只有自定义回答才有
                         tReply = System.currentTimeMillis();
                         invalidate();
                     }
@@ -365,7 +357,6 @@ public class TrialView extends View {
         tRound = System.currentTimeMillis();
         tReply = -1L;
         reply = "";
-        note = "";
         awaiting = true;
         sent = false;
         last = null;

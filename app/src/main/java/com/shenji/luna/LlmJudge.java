@@ -35,14 +35,9 @@ public final class LlmJudge {
     public static final class Verdict {
         public final int kind;      // 0 崩塌 / 1 精准 / 2 沉默
         public final String reply;  // 神的回应
-        public final String note;   // ★月见：巡礼札记（可空）
         Verdict(int kind, String reply) {
-            this(kind, reply, "");
-        }
-        Verdict(int kind, String reply, String note) {
             this.kind = kind;
             this.reply = reply;
-            this.note = (note == null) ? "" : note;
         }
     }
 
@@ -159,8 +154,7 @@ public final class LlmJudge {
             if (kind < 0 || kind > 2) kind = 1;
             String reply = o.optString("reply", "").trim();
             if (reply.length() == 0) reply = NineWines.localReply(q.round, kind);
-            String note = o.optString("note", "").trim();   // ★月见：巡礼札记
-            return new Verdict(kind, reply, note);
+            return new Verdict(kind, reply);
         } catch (JSONException e) {
             return null;
         }
@@ -184,7 +178,6 @@ public final class LlmJudge {
             "0 = 硬撑（玩家断言自己能站到边界之外、否认边界、或用蛮力/逃避回答悖论——触发崩塌）\n" +
             "1 = 精准（玩家认出了界的自指/递归本质、以悖论回应悖论、或把回答收回界内——视为答准）\n" +
             "2 = 沉默边缘（玩家长考、回避实质、或回答近乎无物——视为答准但额外记账）\n\n" +
-            "【你的回应】以伊赛德亚的口吻写一到两句：冷而悲悯——你不宽恕，但你看见了对方；短、优雅、带悖论感。回应用简体中文，总长不超过 60 字。\n\n" +
-            "【巡礼札记】另写一句只有回答者自己能看懂的私语（第二人称、诗意、≤40字），放在 note 字段。\n\n" +
-            "只输出 JSON，格式：{\"kind\": 0或1或2, \"reply\": \"你的回应\", \"note\": \"札记\"}";
+            "【你的回应】以伊赛德亚的口吻写一到两句：冷、短、优雅、带悖论感。回应用简体中文，总长不超过 60 字。\n\n" +
+            "只输出 JSON，格式：{\"kind\": 0或1或2, \"reply\": \"你的回应\"}";
 }
