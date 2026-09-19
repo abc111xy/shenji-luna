@@ -58,6 +58,9 @@ public class GameView extends GLSurfaceView {
     /** ★ 发动时力（长按开火键） */
     public void activateShili() { renderer.activateShili(); }
 
+    /** ★ 血字砸屏播完 → 正式开战 */
+    public void startBossNow() { renderer.startBossNow(); }
+
     /** ★ 月见版：注入玩家设置 */
     public void applyLunaSettings(float sens, float fov, float bob, boolean gentle, boolean soundOn) {
         renderer.applyLunaSettings(sens, fov, bob, gentle, soundOn);
